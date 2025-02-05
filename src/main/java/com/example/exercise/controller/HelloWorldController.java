@@ -23,6 +23,7 @@ public class HelloWorldController {
     try {
 
       var result = helloWorldService.helloWorld(name);
+      // test
       var responseBody = BaseResponse.<String>builder().data(result).status(HttpStatus.OK.toString()).build();
       return ResponseEntity.ok(responseBody);
 
