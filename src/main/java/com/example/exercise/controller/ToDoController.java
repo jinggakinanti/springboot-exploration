@@ -47,20 +47,21 @@ public class ToDoController {
         }
     }
     @DeleteMapping(value = "/list")
-    public ResponseEntity<BaseResponse<ToDo>> deleteToDo(@RequestParam String id){
+    public ResponseEntity<BaseResponse<Boolean>> deleteToDo(@RequestParam String id){
 
         Boolean toDel = toDoService.deleteToDo(id);
         if(toDel){
-            ToDo result = toDoService.searchToDo(id);
-            var responseBody = BaseResponse.<ToDo>builder().data(result)
+//            ToDo result = toDoService.searchToDo(id);
+            var responseBody = BaseResponse.<Boolean>builder().data(toDel)
                     .status(HttpStatus.OK.name())
                     .message("Deleting this data")
                     .build();
             return ResponseEntity.ok(responseBody);
         }else{
-            var badResponseBody = BaseResponse.<ToDo>builder()
+                var badResponseBody = BaseResponse.<Boolean>builder()
                     .status(HttpStatus.BAD_REQUEST.toString())
                     .message("This data doesn't exist or already deleted")
+                        .data(toDel)
                     .build();
             return ResponseEntity.badRequest().body(badResponseBody);
         }
